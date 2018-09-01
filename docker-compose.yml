@@ -1,0 +1,29 @@
+version: '3.1'
+
+services:
+
+  wordpress:
+    image: wordpress
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      WORDPRESS_DB_PASSWORD: root
+    volumes:
+      - ./wp-init.sh:/usr/local/bin/wp-init.sh
+      - ./{plugin-directory}:/var/www/html/wp-content/plugins/{plugin-directory}
+
+  mysql:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - 8181:80
+    environment:
+      MYSQL_USERNAME: root
+      MYSQL_ROOT_PASSWORD: root
+      PMA_HOST: mysql
+
